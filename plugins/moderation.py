@@ -1,8 +1,8 @@
 from discord.ext import commands
 from discord_slash import cog_ext, SlashContext
-from discord import Member 
+from discord import User
 import time
-
+import discord
 class Moderation(commands.Cog):
     def __init__(self, bot) -> None:
         self.bot = bot
@@ -28,13 +28,17 @@ class Moderation(commands.Cog):
         }
         self.afk_users = {}
         self.rule_limited_users = {}
-    async def check_command(self, ctx, user: Member):
-        await ctx.send("Work In Progress, sorry!")
+    async def check_command(self, ctx, user: User):
+        try:
+            entry = await ctx.guild.fetch_ban(user)
+            msg = f":hammer: Banned: Yes (Reason {entry.reason})\n"
+        except discord.NotFound:
+            msg = f":hammer: Banned: No\n"
     @cog_ext.cog_slash(name="check")
-    async def check(self, ctx: SlashContext, user: Member):
+    async def check(self, ctx: SlashContext, user: User):
         await self.check_command(ctx, user)
     @commands.command(name="check")
-    async def check_nonslash(self, ctx, user: Member):
+    async def check_nonslash(self, ctx, user: User):
         await self.check_command(ctx, user)
     async def rule_command(self,ctx,num):
         norole = "[<Role id=750581992223146074 name='@everyone'>]"
