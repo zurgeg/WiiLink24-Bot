@@ -12,7 +12,7 @@ print("Loading default extensions...")
 start = time()
 
 bot.load_extension("plugins.fun") 
-# bot.load_extension("plugins.moderation") 
+bot.load_extension("plugins.moderation") 
 
 end = time()
 print(f"Loading default extensions took {end - start}ms")

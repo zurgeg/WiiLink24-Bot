@@ -8,10 +8,10 @@ class Moderation(commands.Cog):
     async def check_command(self, ctx, user: Member):
         await ctx.send("Work In Progress, sorry!")
     @cog_ext.cog_slash(name="check")
-    async def check(self, ctx: SlashContext, user: int):
+    async def check(self, ctx: SlashContext, user: Member):
         await self.check_command(ctx, user)
     @commands.command(name="check")
-    async def check_std(self, ctx, user: int):
+    async def check_nonslash(self, ctx, user: Member):
         await self.check_command(ctx, user)
         
 def setup(bot):
