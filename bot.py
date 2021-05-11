@@ -15,6 +15,6 @@ bot.load_extension("plugins.fun")
 bot.load_extension("plugins.moderation") 
 
 end = time()
-print(f"Loading default extensions took {end - start}ms")
+print(f"Loading default extensions took {end - start}s")
 
 bot.run(config.token)
