@@ -34,6 +34,7 @@ class Moderation(commands.Cog):
             msg = f":hammer: Banned: Yes (Reason {entry.reason})\n"
         except discord.NotFound:
             msg = f":hammer: Banned: No\n"
+        
     @cog_ext.cog_slash(name="check")
     async def check(self, ctx: SlashContext, user: User):
         await self.check_command(ctx, user)
