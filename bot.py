@@ -1,9 +1,10 @@
 import config
+import discord
 from discord.ext import commands
 from time import time
 from discord_slash import SlashCommand
 
-bot = commands.Bot()
+bot = commands.Bot(command_prefix="!")
 slash = SlashCommand(bot, override_type = True, sync_commands=True)
 
 print("Loading default extensions...")

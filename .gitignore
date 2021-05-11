@@ -1,2 +1,3 @@
 config.py
 plugins/community/*
+__pycache__
