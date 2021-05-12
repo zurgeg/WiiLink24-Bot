@@ -29,12 +29,20 @@ class Moderation(commands.Cog):
         }
         self.afk_users = {}
         self.rule_limited_users = {}
+    @commands.has_permissions(ban_members=True)
     async def check_command(self, ctx, user: User):
         try:
             entry = await ctx.guild.fetch_ban(user)
             msg = f":hammer: Banned: Yes (Reason {entry.reason})\n"
         except discord.NotFound:
             msg = f":hammer: Banned: No\n"
+        except discord.ext.commands.MissingPermissions:
+            msg = f":hammer: Banned: Can't obtain status, 2FA is needed or I don't have permission!\n"
+        except discord.errors.Forbidden:
+            msg = f":hammer: Banned: Can't obtain status, 2FA is needed or I don't have permission!\n"
+        userq = session.query(Users).filter_by(id=user.id).first()
+        msg = msg + (f":triangular_flag_on_post: Strikes: {userq.strikes}")
+        await ctx.send(msg)
         
     @cog_ext.cog_slash(name="check")
     async def check(self, ctx: SlashContext, user: User):
@@ -79,13 +87,21 @@ class Moderation(commands.Cog):
         await self.rule_command(ctx, rule)
     @commands.has_permissions(ban_members=True)
     async def strike_command(self, ctx, user: discord.Member):
-        user = session.query(Users).filter_by(id=user.id)
-        user.strikes += 1
-        session.add(user)
+        userq = session.query(Users).filter_by(id=user.id).first()
+        if userq == None:
+            userq = Users(id=user.id, strikes=1, points=100)
+        else:
+            userq.strikes += 1
+        session.add(userq)
         session.commit()
+        await ctx.send("User has been struck!")
     @commands.command(name="strike")
     async def strike_standard(self, ctx, user: discord.Member):
         await self.strike_command(ctx, user)
+    @cog_ext.cog_slash(name="strike")
+    async def strike_slash(self, ctx, user: discord.Member):
+        await self.strike_command(ctx, user)
+
 
 def setup(bot):
     bot.add_cog(Moderation(bot))
