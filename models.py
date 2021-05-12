@@ -3,6 +3,7 @@ from sqlalchemy import Table, Column, Integer, MetaData
 meta = MetaData()
 
 users = Table(
+    'users', meta,
     Column('id', Integer, primary_key = True),
     Column('strikes', Integer),
     Column('points', Integer)

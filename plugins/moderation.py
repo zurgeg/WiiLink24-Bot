@@ -3,6 +3,8 @@ from discord_slash import cog_ext, SlashContext
 from discord import User
 import time
 import discord
+from models import users
+
 class Moderation(commands.Cog):
     def __init__(self, bot) -> None:
         self.bot = bot
@@ -43,10 +45,11 @@ class Moderation(commands.Cog):
         await self.check_command(ctx, user)
     @commands.command()
     async def doihaveadmin(self, ctx):
-        if ctx.author.has_role(650819889434591241):
-            ctx.send("Yes, you do!")
+        admin = ctx.message.guild.get_role(750596106400038932)
+        if admin in ctx.author.roles:
+            await ctx.send("Yes, you do!")
         else:
-            ctx.send("No, you don't.")
+            await ctx.send("No, you don't.")
     async def rule_command(self,ctx,num):
         norole = "[<Role id=750581992223146074 name='@everyone'>]"
         if not ctx.author in self.rule_limited_users or len(ctx.author.roles) != 1:
@@ -75,6 +78,7 @@ class Moderation(commands.Cog):
     @commands.command(name="rule")
     async def rule_nonslash(self, ctx, rule: int):
         await self.rule_command(ctx, rule)
-        
+    async def strike_command(self, ctx, user: discord.Member):
+        ...
 def setup(bot):
     bot.add_cog(Moderation(bot))
