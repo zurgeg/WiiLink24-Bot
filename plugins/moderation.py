@@ -41,6 +41,12 @@ class Moderation(commands.Cog):
     @commands.command(name="check")
     async def check_nonslash(self, ctx, user: User):
         await self.check_command(ctx, user)
+    @commands.command()
+    async def doihaveadmin(self, ctx):
+        if ctx.author.has_role(650819889434591241):
+            ctx.send("Yes, you do!")
+        else:
+            ctx.send("No, you don't.")
     async def rule_command(self,ctx,num):
         norole = "[<Role id=750581992223146074 name='@everyone'>]"
         if not ctx.author in self.rule_limited_users or len(ctx.author.roles) != 1:
