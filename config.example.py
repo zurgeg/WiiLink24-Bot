@@ -1,2 +1,2 @@
 token = 'token moment'
-extensions = []
+plugins = []
