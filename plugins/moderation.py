@@ -3,8 +3,8 @@ from discord_slash import cog_ext, SlashContext
 from discord import User
 import time
 import discord
-from models import users
-
+import models
+print(dir(models))
 class Moderation(commands.Cog):
     def __init__(self, bot) -> None:
         self.bot = bot
@@ -78,10 +78,15 @@ class Moderation(commands.Cog):
     @commands.command(name="rule")
     async def rule_nonslash(self, ctx, rule: int):
         await self.rule_command(ctx, rule)
+    @commands.has_permissions(ban_members=True)
     async def strike_command(self, ctx, user: discord.Member):
-        user = user.select().where(users.c.id == user.id)
-        for row in result:
-            ...
+        user = models.Users.query().filter_by(id=user.id)
+        user.strikes += 1
+        models.session.add(user)
+        models.session.commit()
+    @commands.command(name="strike")
+    async def strike_standard(self, ctx, user: discord.Member):
+        await self.strike_command(ctx, user)
 
 def setup(bot):
     bot.add_cog(Moderation(bot))
