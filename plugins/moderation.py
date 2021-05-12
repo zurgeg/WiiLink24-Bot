@@ -40,7 +40,6 @@ class Moderation(commands.Cog):
         else:
             await ctx.send("No, you don't.")
     async def rule_command(self,ctx,num):
-        norole = "[<Role id=750581992223146074 name='@everyone'>]"
         if not ctx.author in self.rule_limited_users or len(ctx.author.roles) != 1:
             self.rule_limited_users[ctx.author] = time.time()
             try:
