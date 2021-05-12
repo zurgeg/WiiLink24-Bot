@@ -32,13 +32,6 @@ class Moderation(commands.Cog):
     @commands.command(name="check")
     async def check_nonslash(self, ctx, user: User):
         await self.check_command(ctx, user)
-    @commands.command()
-    async def doihaveadmin(self, ctx):
-        admin = ctx.message.guild.get_role(750596106400038932)
-        if admin in ctx.author.roles:
-            await ctx.send("Yes, you do!")
-        else:
-            await ctx.send("No, you don't.")
     async def rule_command(self,ctx,num):
         if not ctx.author in self.rule_limited_users or len(ctx.author.roles) != 1:
             self.rule_limited_users[ctx.author] = time.time()
