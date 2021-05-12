@@ -79,6 +79,9 @@ class Moderation(commands.Cog):
     async def rule_nonslash(self, ctx, rule: int):
         await self.rule_command(ctx, rule)
     async def strike_command(self, ctx, user: discord.Member):
-        ...
+        user = user.select().where(users.c.id == user.id)
+        for row in result:
+            ...
+
 def setup(bot):
     bot.add_cog(Moderation(bot))
