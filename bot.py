@@ -10,8 +10,6 @@ intents = discord.Intents.all()
 bot = commands.Bot(command_prefix="!", intents = intents)
 slash = SlashCommand(bot, override_type = True, sync_commands=True)
 
-engine = create_engine(config.db_url)
-
 print("Loading default extensions...")
 start = time()
 

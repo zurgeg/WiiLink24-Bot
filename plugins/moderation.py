@@ -3,8 +3,7 @@ from discord_slash import cog_ext, SlashContext
 from discord import User
 import time
 import discord
-import models
-print(dir(models))
+from models import Users, session
 class Moderation(commands.Cog):
     def __init__(self, bot) -> None:
         self.bot = bot
@@ -80,10 +79,10 @@ class Moderation(commands.Cog):
         await self.rule_command(ctx, rule)
     @commands.has_permissions(ban_members=True)
     async def strike_command(self, ctx, user: discord.Member):
-        user = models.Users.query().filter_by(id=user.id)
+        user = session.query(Users).filter_by(id=user.id)
         user.strikes += 1
-        models.session.add(user)
-        models.session.commit()
+        session.add(user)
+        session.commit()
     @commands.command(name="strike")
     async def strike_standard(self, ctx, user: discord.Member):
         await self.strike_command(ctx, user)
