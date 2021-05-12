@@ -1,4 +1,4 @@
-from sqlalchemy import Table, Column, Integer, create_engine
+from sqlalchemy import Table, Column, Integer, create_engine, Boolean
 from sqlalchemy.orm import sessionmaker
 import config
 from sqlalchemy.ext.declarative import declarative_base
@@ -9,6 +9,7 @@ class Users(Base):
     id = Column(Integer, primary_key=True)
     strikes = Column(Integer, primary_key=True)
     points = Column(Integer, primary_key=True)
+    muted = Column(Boolean, primary_key=True, default=False)
 
 
 engine = create_engine(config.db_url)

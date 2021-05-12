@@ -75,7 +75,8 @@ class Moderation(commands.Cog):
     @cog_ext.cog_slash(name="strike")
     async def strike_slash(self, ctx, user: discord.Member):
         await self.strike_command(ctx, user)
-
+    async def mute(self, ctx, user: discord.Member):
+        ...
 
 def setup(bot):
     bot.add_cog(Moderation(bot))
