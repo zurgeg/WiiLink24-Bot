@@ -3,3 +3,4 @@ plugins/community/*
 __pycache__
 *.db
 manage.py
+!migrations/manage.py
