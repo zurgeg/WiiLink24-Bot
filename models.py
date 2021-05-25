@@ -7,9 +7,9 @@ Base = declarative_base()
 class Users(Base):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
-    strikes = Column(Integer, primary_key=True)
-    points = Column(Integer, primary_key=True)
-    muted = Column(Boolean, primary_key=True, default=False)
+    strikes = Column(Integer)
+    points = Column(Integer)
+    muted = Column(Boolean, default=False)
 
 
 engine = create_engine(config.db_url)

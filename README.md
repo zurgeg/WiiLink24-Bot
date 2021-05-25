@@ -1,5 +1,5 @@
-# WiiLink24 Bot
-A discord bot for the WiiLink24 Discord Server.
+# Mirage (Formerly WiiLink24 Bot)
+A General Purpose Discord Bot.
 
 ## Running
 1. Fill in config.example.py and copy it to config.py

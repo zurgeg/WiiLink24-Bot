@@ -2,3 +2,4 @@ config.py
 plugins/community/*
 __pycache__
 *.db
+manage.py
