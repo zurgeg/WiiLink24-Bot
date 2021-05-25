@@ -23,7 +23,10 @@ class Moderation(commands.Cog):
         except discord.errors.Forbidden:
             msg = f":hammer: Banned: Can't obtain status, 2FA is needed or I don't have permission!\n"
         userq = session.query(Users).filter_by(id=user.id).first()
-        msg = msg + (f":triangular_flag_on_post: Strikes: {userq.strikes}")
+        try:
+            msg = msg + f":triangular_flag_on_post: Strikes: {userq.strikes}"
+        except:
+            msg = msg + ":triangular_flag_on_post: Strikes: 0"
         await ctx.send(msg)
         
     @cog_ext.cog_slash(name="check")
