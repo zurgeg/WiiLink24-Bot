@@ -63,7 +63,7 @@ class Moderation(commands.Cog):
     async def rule_nonslash(self, ctx, rule: int):
         await self.rule_command(ctx, rule)
     @commands.has_permissions(ban_members=True)
-    async def strike_command(self, ctx, user: discord.Member):
+    async def strike_command(self, ctx, user: discord.Member, reason: str):
         userq = session.query(Users).filter_by(id=user.id).first()
         if userq == None:
             userq = Users(id=user.id, strikes=1, points=100)
@@ -72,12 +72,13 @@ class Moderation(commands.Cog):
         session.add(userq)
         session.commit()
         await ctx.send("User has been struck!")
+        await user.send(f"You have recived a strike for {reason}")
     @commands.command(name="strike")
-    async def strike_standard(self, ctx, user: discord.Member):
-        await self.strike_command(ctx, user)
+    async def strike_standard(self, ctx, user: discord.Member, reason: str):
+        await self.strike_command(ctx, user, reason)
     @cog_ext.cog_slash(name="strike")
-    async def strike_slash(self, ctx, user: discord.Member):
-        await self.strike_command(ctx, user)
+    async def strike_slash(self, ctx, user: discord.Member, reason: str):
+        await self.strike_command(ctx, user, reason)
     async def mute(self, ctx, user: discord.Member):
         ...
 
