@@ -60,7 +60,7 @@ class Moderation(commands.Cog):
                 except KeyError:
                     await ctx.send('That rule doesn\'t exist!')
     @cog_ext.cog_slash(name="rule",
-        options=[create_option(name="rule", option_type=3, description="Rule to get", required=True, choices=[create_choice(name=f"Rule {rule}", value=str(rule)) for rule in range(1, len(rules) + 1)])]
+        options=[create_option(name="rule", option_type=3, description="Rule to get", required=True, choices=[create_choice(name=f"Rule {rule}", value=str(rule + 1)) for rule in range(1, len(rules) + 1)])]
     )
     async def rule(self, ctx: SlashContext, rule: int):
         await self.rule_command(ctx, rule)
