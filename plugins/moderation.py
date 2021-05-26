@@ -5,9 +5,12 @@ import time
 import discord
 import config
 from models import Users, session
+from config import rules
+from discord_slash.utils.manage_commands import create_option
 class Moderation(commands.Cog):
     def __init__(self, bot) -> None:
         self.bot = bot
+        rules = config.rules
         self.rules = config.rules
         self.afk_users = {}
         self.rule_limited_users = {}
@@ -35,7 +38,7 @@ class Moderation(commands.Cog):
     @commands.command(name="check")
     async def check_nonslash(self, ctx, user: User):
         await self.check_command(ctx, user)
-    async def rule_command(self,ctx,num):
+    async def rule_command(self,ctx,num: int):
         if not ctx.author in self.rule_limited_users or len(ctx.author.roles) != 1:
             self.rule_limited_users[ctx.author] = time.time()
             try:
@@ -56,7 +59,9 @@ class Moderation(commands.Cog):
                     await ctx.send(self.rules[num])
                 except KeyError:
                     await ctx.send('That rule doesn\'t exist!')
-    @cog_ext.cog_slash(name="rule")
+    @cog_ext.cog_slash(name="rule",
+        options=[create_option(name=f"Rule {rule}", value=rule) for rule in range(len(rules))]
+    )
     async def rule(self, ctx: SlashContext, rule: int):
         await self.rule_command(ctx, rule)
     @commands.command(name="rule")
