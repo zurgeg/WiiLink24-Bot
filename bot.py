@@ -5,7 +5,7 @@ from time import time
 from discord_slash import SlashCommand
 from sqlalchemy import create_engine
 
-intents = discord.Intents.all()
+intents = discord.Intents.none()
 
 bot = commands.Bot(command_prefix="!", intents = intents)
 slash = SlashCommand(bot, override_type = True, sync_commands=True)

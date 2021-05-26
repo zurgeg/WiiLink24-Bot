@@ -1,4 +1,4 @@
-discord-py-slash-commands
+discord-py-slash-command
 discord.py
 SQLAlchemy
 sqlalchemy-migrate
