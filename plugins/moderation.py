@@ -6,7 +6,7 @@ import discord
 import config
 from models import Users, session
 from config import rules
-from discord_slash.utils.manage_commands import create_choice
+from discord_slash.utils.manage_commands import create_choice, create_option
 class Moderation(commands.Cog):
     def __init__(self, bot) -> None:
         self.bot = bot
@@ -60,7 +60,7 @@ class Moderation(commands.Cog):
                 except KeyError:
                     await ctx.send('That rule doesn\'t exist!')
     @cog_ext.cog_slash(name="rule",
-        options=[create_choice(name=f"Rule {rule}", value=rule) for rule in range(len(rules))]
+        options=[create_option("Rule", choices=[create_choice(name=f"Rule {rule}", value=rule) for rule in range(len(rules))])]
     )
     async def rule(self, ctx: SlashContext, rule: int):
         await self.rule_command(ctx, rule)
